@@ -132,9 +132,60 @@ const tokenPayments = (bankId) => {
 	return client(bankId, config)
 }
 
+const tokenConfirmPayment = (bankId, code) => {
+	const data = qs.stringify({
+		'grant_type': 'authorization_code',
+		'scope': 'payments',
+		'code': code,
+		'redirect_uri': 'http://www.google.co.uk' 
+	})
+
+	const config = {
+		method: 'post',
+		url: `https://as${bankId}.tecban-sandbox.o3bank.co.uk/token`,
+		headers: { 
+			'Content-Type': 'application/x-www-form-urlencoded', 
+			'Authorization': `Basic ${basicToken(bankId)}`
+		},
+		data
+	}
+
+	log(config)
+	return client(bankId, config)
+}
+
+const domesticPayments = (bankId, token, intentId, initiation) => {
+	console.log(initiation)
+	const data = JSON.stringify({
+		"Data": {
+			"ConsentId": intentId,
+			"Initiation":  JSON.parse(initiation)
+		},
+		"Risk": {}
+	})
+
+	const config = {
+		method: 'post',
+		url: `https://rs${bankId}.tecban-sandbox.o3bank.co.uk/open-banking/v3.1/pisp/domestic-payments`,
+		headers: { 
+			'Content-Type': 'application/json', 
+			'x-fapi-financial-id': 'c3c937c4-ab71-427f-9b59-4099b7c680ab', 
+			'x-fapi-customer-ip-address': '10.1.1.10', 
+			'x-fapi-interaction-id': uuidv4(), 
+			'Authorization': `Bearer ${token}`
+		},
+		data
+	};
+
+	log(config)
+	return client(bankId, config)
+}
+
 module.exports = {
 	token,
+	tokenConfirmPayment,
 	domesticPaymentConsents,
+	domesticPayments,
 	tokenPayments,
 	accountAccessConsents,
 	authCodeUrl

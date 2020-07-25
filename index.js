@@ -49,7 +49,6 @@ app.get('/startAuthentication/:id', (request, responseExpress) => {
 		.catch(error)
 })
 
-
 app.post('/startPayment/:id', (request, responseExpress) => {
 	const bankId = request.params.id
 	let url = ''
@@ -57,7 +56,7 @@ app.post('/startPayment/:id', (request, responseExpress) => {
 
 	const error = errorLog => {
 		console.error(errorLog)
-		responseExpress.json({isOk, url})
+		responseExpress.json({isOk, url, intentId: '', initiation: ''})
 	}
 
 	api.tokenPayments(bankId)
@@ -69,14 +68,39 @@ app.post('/startPayment/:id', (request, responseExpress) => {
 				.then(response => {
 					data = response.data
 					const intentId = data.Data.ConsentId
+					const initiation = data.Data.Initiation
 
 					api.authCodeUrl(bankId, intentId, 'payments')
 						.then(response => {
 							url = response.data
 							isOk = true
-							responseExpress.json({isOk, url})
+							responseExpress.json({isOk, url, intentId, initiation: JSON.stringify(initiation)})
 						})
 						.catch(error)
+				})
+				.catch(error)
+		})
+		.catch(error)
+})
+
+app.post('/confirmPayment/:id', (request, responseExpress) => {
+	const bankId = request.params.id
+	let isOk = false
+
+	const error = errorLog => {
+		console.error(errorLog)
+		responseExpress.json({isOk})
+	}
+
+	api.tokenConfirmPayment(bankId, request.body.code)
+		.then(response => {
+			let data = response.data
+			const token = data.access_token
+
+			api.domesticPayments(bankId, token, request.body.intentId, request.body.initiation)
+				.then(response => {
+					isOk = response.Data.Status === 'AcceptedSettlementCompleted'
+					responseExpress.json({isOk})
 				})
 				.catch(error)
 		})
