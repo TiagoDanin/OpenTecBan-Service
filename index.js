@@ -11,7 +11,8 @@ app.get('/', (request, responseExpress) => responseExpress.send('Hello World!'))
 
 app.get('/api', (request, responseExpress) => responseExpress.json({isOk: true}))
 
-app.get('/startAuthentication', (request, responseExpress) => {
+app.get('/startAuthentication/:id', (request, responseExpress) => {
+	const bankId = request.params.id
 	let url = ''
 	let isOk = false
 
@@ -20,17 +21,17 @@ app.get('/startAuthentication', (request, responseExpress) => {
 		responseExpress.json({isOk, url})
 	}
 
-	api.token()
+	api.token(bankId)
 		.then(response => {
 			let data = response.data
 			token = data.access_token
 
-			api.accountAccessConsents(token)
+			api.accountAccessConsents(bankId, token)
 				.then(response => {
 					data = response.data
 					const intentId = data.Data.ConsentId
 
-					api.authCodeUrl(intentId)
+					api.authCodeUrl(bankId, intentId)
 						.then(response => {
 							url = response.data
 							isOk = true
