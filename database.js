@@ -22,7 +22,18 @@ const addBico = (name, photo, description) => {
 	return user
 }
 
+const hasBankWithCpf = (cpf) => {
+	return bicos.banksCpf.includes(cpf)
+}
+
+const addCpf = (cpf) => {
+	bicos.banksCpf.push(cpf)
+	save()
+}
+
 module.exports = {
 	bicos,
-	addBico
+	addBico,
+	hasBankWithCpf,
+	addCpf
 }

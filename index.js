@@ -124,4 +124,16 @@ app.post('/bicos/add', (request, responseExpress) => {
 	responseExpress.json({isOk: true, user, list: database.bicos.list})
 })
 
+app.post('/cpf/check/:cpf', (request, responseExpress) => {
+	const hasCpf = database.hasBankWithCpf(request.params.cpf)
+
+	responseExpress.json({isOk: true, hasCpf})
+})
+
+app.post('/cpf/add/:cpf', (request, responseExpress) => {
+	const hasCpf = database.addCpf(request.params.cpf)
+
+	responseExpress.json({isOk: true, hasCpf: true})
+})
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
