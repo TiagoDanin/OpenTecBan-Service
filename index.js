@@ -8,8 +8,6 @@ const database = require('./database')
 
 const port = process.env.PORT
 
-let token = ''
-
 app.use(bodyParser.urlencoded({
 	extended: false
 }))
@@ -31,14 +29,48 @@ app.get('/startAuthentication/:id', (request, responseExpress) => {
 	api.token(bankId)
 		.then(response => {
 			let data = response.data
-			token = data.access_token
-
+			const token = data.access_token
+			console.log(token)
 			api.accountAccessConsents(bankId, token)
 				.then(response => {
 					data = response.data
 					const intentId = data.Data.ConsentId
 
-					api.authCodeUrl(bankId, intentId)
+					api.authCodeUrl(bankId, intentId, 'accounts')
+						.then(response => {
+							url = response.data
+							isOk = true
+							responseExpress.json({isOk, url})
+						})
+						.catch(error)
+				})
+				.catch(error)
+		})
+		.catch(error)
+})
+
+
+app.post('/startPayment/:id', (request, responseExpress) => {
+	const bankId = request.params.id
+	let url = ''
+	let isOk = false
+
+	const error = errorLog => {
+		console.error(errorLog)
+		responseExpress.json({isOk, url})
+	}
+
+	api.tokenPayments(bankId)
+		.then(response => {
+			let data = response.data
+			const token = data.access_token
+
+			api.domesticPaymentConsents(bankId, token, request.body.amount)
+				.then(response => {
+					data = response.data
+					const intentId = data.Data.ConsentId
+
+					api.authCodeUrl(bankId, intentId, 'payments')
 						.then(response => {
 							url = response.data
 							isOk = true

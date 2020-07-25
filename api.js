@@ -2,6 +2,7 @@ const axios = require('axios')
 const qs = require('qs')
 const https = require('https')
 const fs = require('fs')
+const {v4: uuidv4} = require('uuid')
 
 const timeout = 1000
 
@@ -64,15 +65,67 @@ const accountAccessConsents = (bankId, token) => {
 	return client(bankId, config)
 }
 
-const authCodeUrl = (bankId, id) => {
+const authCodeUrl = (bankId, id, type) => {
 	const config = {
 		method: 'get',
-		url: `https://rs${bankId}.tecban-sandbox.o3bank.co.uk/ozone/v1.0/auth-code-url/${id}?scope=accounts&alg=none`,
+		url: `https://rs${bankId}.tecban-sandbox.o3bank.co.uk/ozone/v1.0/auth-code-url/${id}?scope=${type}&alg=none`,
 		headers: {
 			Authorization: `Basic ${basicToken(bankId)}`,
 			Accept: '*/*'
+		}
+	}
+
+	log(config)
+	return client(bankId, config)
+}
+
+const domesticPaymentConsents = (bankId, token, amount) => {
+	const data = JSON.stringify({
+		Data: {
+			Initiation: {
+				InstructionIdentification: 'PMT.01234567890123456789.0124',
+				EndToEndIdentification: 'TRX.01234567890.0124',
+				InstructedAmount: {Amount: amount, Currency: 'BRL'},
+				CreditorAccount: {
+					SchemeName: 'BR.CPF',
+					Identification: '12444678904',
+					Name: 'Jaime Rodg'
+				}
+			}
+		}, Risk: {}
+	})
+
+	const config = {
+		method: 'post',
+		url: `https://rs${bankId}.tecban-sandbox.o3bank.co.uk/open-banking/v3.1/pisp/domestic-payment-consents`,
+		headers: {
+			'Content-Type': 'application/json',
+			'x-fapi-financial-id': 'c3c937c4-ab71-427f-9b59-4099b7c680ab',
+			'x-fapi-customer-ip-address': '10.1.1.10',
+			'x-fapi-interaction-id': uuidv4(),
+			Authorization: `Bearer ${token}`
 		},
-		data: null
+		data
+	}
+
+	log(config)
+	return client(bankId, config)
+}
+
+const tokenPayments = (bankId) => {
+	const data = qs.stringify({
+		'grant_type': 'client_credentials',
+		'scope': 'payments openid' 
+	})
+
+	const config = {
+		method: 'post',
+		url: `https://as${bankId}.tecban-sandbox.o3bank.co.uk/token`,
+		headers: { 
+			'Content-Type': 'application/x-www-form-urlencoded', 
+			'Authorization': `Basic ${basicToken(bankId)}`
+		},
+		data
 	}
 
 	log(config)
@@ -81,6 +134,8 @@ const authCodeUrl = (bankId, id) => {
 
 module.exports = {
 	token,
+	domesticPaymentConsents,
+	tokenPayments,
 	accountAccessConsents,
 	authCodeUrl
 }
