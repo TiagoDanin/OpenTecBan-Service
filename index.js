@@ -107,6 +107,12 @@ app.post('/confirmPayment/:id', (request, responseExpress) => {
 		.catch(error)
 })
 
+app.get('/done/bico/:id', (request, responseExpress) => {
+	database.donePico(request.params.id)
+
+	responseExpress.json({isOk: true})
+})
+
 app.get('/bicos/all', (request, responseExpress) => {
 	responseExpress.json({isOk: true, list: database.bicos.list})
 })
@@ -119,21 +125,50 @@ app.get('/bicos/:id', (request, responseExpress) => {
 })
 
 app.post('/bicos/add', (request, responseExpress) => {
-	const user = database.addBico(request.body.name, request.body.photo, request.body.description)
+	const user = database.addBico(request.body.name, request.body.type, request.body.photo, request.body.description)
 
 	responseExpress.json({isOk: true, user, list: database.bicos.list})
 })
 
-app.post('/cpf/check/:cpf', (request, responseExpress) => {
+app.get('/pedding/bico/:id', (request, responseExpress) => {
+	const id = request.params.id
+
+	const transactions = database.transactionGet(id)
+	const total = transactions.reduce((total, transaction) => total + Number(transaction.amount), 0)
+
+	responseExpress.json({isOk: true, total, list: database.peddingBico(id)})
+})
+
+app.get('/cpf/check/:cpf', (request, responseExpress) => {
 	const hasCpf = database.hasBankWithCpf(request.params.cpf)
 
 	responseExpress.json({isOk: true, hasCpf})
 })
 
-app.post('/cpf/add/:cpf', (request, responseExpress) => {
+app.get('/cpf/add/:cpf', (request, responseExpress) => {
 	const hasCpf = database.addCpf(request.params.cpf)
 
 	responseExpress.json({isOk: true, hasCpf: true})
+})
+
+app.get('/transactions/get/:id', (request, responseExpress) => {
+	const id = request.params.id
+
+	const transactions = database.transactionGet(id)
+	const total = transactions.reduce((total, transaction) => total + Number(transaction.amount), 0)
+
+	responseExpress.json({isOk: true, list: transactions, total})
+})
+
+app.post('/transactions/add/:id', (request, responseExpress) => {
+	database.transactionAdd(
+		request.params.id,
+		request.body.amount,
+		request.body.date,
+		request.body.name
+	)
+
+	responseExpress.json({isOk: true})
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

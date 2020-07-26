@@ -2,10 +2,68 @@
 	"list": [
 		{
 			"id": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
+			"type": "Programador",
 			"name": "Tiago Danin",
 			"photo": "https://avatars1.githubusercontent.com/u/5731176?s=460",
 			"description": "Faço programas para computador"
+		},
+		{
+			"id": "4122d222-5a47-40ff-84229-10a5fd379d07",
+			"type": "Design",
+			"name": "Thayana Correa",
+			"photo": "https://avatars1.githubusercontent.com/u/8525721?s=460",
+			"description": "Faço impresão 3D"
 		}
 	],
-	"banksCpf": []
+	"banksCpf": [],
+	"request": [
+		{
+			"id": "7e432343-3223-40ff-8419-10a5fd379d07",
+			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
+			"name": "Criar um programar que faz dinheiro",
+			"description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam",
+			"date": "07/08/2020",
+			"amount": "220,01"
+		},
+		{
+			"id": "4333ff095-3223-40ff-8419-10a5fd379d07",
+			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
+			"name": "Criar um jogo estilo Minecraft",
+			"description": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam",
+			"date": "05/08/2020",
+			"amount": "80,00"
+		}
+	],
+	"done": [
+	],
+	"transactions": [
+		{
+			"id": "43332325-3223-40ff-8419-132279d07",
+			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
+			"amount": "50",
+			"date": "22/07/2020",
+			"name": "Bico: instalar office 2016"
+		},
+		{
+			"id": "321222325-3223-40ff-8419-132279d07",
+			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
+			"amount": "-185",
+			"date": "20/07/2020",
+			"name": "Pagamento: conta de luz"
+		},
+		{
+			"id": "5444225-3223-40ff-8419-132279d07",
+			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
+			"amount": "80",
+			"date": "20/07/2020",
+			"name": "Bico: remover vírus do computador"
+		},
+		{
+			"id": "63466-3223-340ff-8419-132279d07",
+			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
+			"amount": "150",
+			"date": "19/07/2020",
+			"name": "Bico: instalar wireless"
+		}
+	]
 }
