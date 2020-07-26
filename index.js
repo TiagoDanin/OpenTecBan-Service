@@ -133,7 +133,10 @@ app.post('/bicos/add', (request, responseExpress) => {
 app.get('/pedding/bico/:id', (request, responseExpress) => {
 	const id = request.params.id
 
-	responseExpress.json({isOk: true, list: database.peddingBico(id)})
+	const transactions = database.transactionGet(id)
+	const total = transactions.reduce((total, transaction) => total + Number(transaction.amount), 0)
+
+	responseExpress.json({isOk: true, total, list: database.peddingBico(id)})
 })
 
 app.get('/cpf/check/:cpf', (request, responseExpress) => {
