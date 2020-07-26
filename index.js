@@ -134,13 +134,13 @@ app.get('/pedding/bico/:id', (request, responseExpress) => {
 	responseExpress.json({isOk: true, list: database.peddingBico(id)})
 })
 
-app.post('/cpf/check/:cpf', (request, responseExpress) => {
+app.get('/cpf/check/:cpf', (request, responseExpress) => {
 	const hasCpf = database.hasBankWithCpf(request.params.cpf)
 
 	responseExpress.json({isOk: true, hasCpf})
 })
 
-app.post('/cpf/add/:cpf', (request, responseExpress) => {
+app.get('/cpf/add/:cpf', (request, responseExpress) => {
 	const hasCpf = database.addCpf(request.params.cpf)
 
 	responseExpress.json({isOk: true, hasCpf: true})
@@ -153,6 +153,17 @@ app.get('/transactions/get/:id', (request, responseExpress) => {
 	const total = transactions.reduce((total, transaction) => total + Number(transaction.amount), 0)
 
 	responseExpress.json({isOk: true, list: transactions, total})
+})
+
+app.post('/transactions/add/:id', (request, responseExpress) => {
+	database.transactionAdd(
+		request.params.id,
+		request.body.amount,
+		request.body.date,
+		request.body.name
+	)
+
+	responseExpress.json({isOk: true})
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

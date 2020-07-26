@@ -31,23 +31,30 @@
 		{
 			"id": "43332325-3223-40ff-8419-132279d07",
 			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
-			"amount": "50.00",
+			"amount": "50",
 			"date": "22/07/2020",
 			"name": "Bico: instalar office 2016"
 		},
 		{
 			"id": "321222325-3223-40ff-8419-132279d07",
 			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
-			"amount": "-185.00",
+			"amount": "-185",
 			"date": "20/07/2020",
 			"name": "Pagamento: conta de luz"
 		},
 		{
 			"id": "5444225-3223-40ff-8419-132279d07",
 			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
-			"amount": "80.50",
+			"amount": "80",
 			"date": "20/07/2020",
 			"name": "Bico: remover vírus do computador"
+		},
+		{
+			"id": "63466-3223-340ff-8419-132279d07",
+			"userId": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
+			"amount": "150",
+			"date": "19/07/2020",
+			"name": "Bico: instalar wireless"
 		}
 	]
 }

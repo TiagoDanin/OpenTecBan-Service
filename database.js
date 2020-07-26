@@ -36,12 +36,15 @@ const peddingBico = (userId) => {
 }
 
 const transactionAdd = (userId, amount, date, name) => {
+	amount = Number(amount) + 0.0
+	amount = amount.toString();
+
 	const transaction = {
 		id: uuidv4(),
 		userId, amount, date, name
 	}
 
-	bicos.transaction.push(transaction)
+	bicos.transactions.unshift(transaction)
 	save()
 	return transaction
 }
