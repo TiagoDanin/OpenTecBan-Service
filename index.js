@@ -107,6 +107,10 @@ app.post('/confirmPayment/:id', (request, responseExpress) => {
 		.catch(error)
 })
 
+app.get('/done/bico/:id', (request, responseExpress) => {
+	responseExpress.json({isOk: true})
+})
+
 app.get('/bicos/all', (request, responseExpress) => {
 	responseExpress.json({isOk: true, list: database.bicos.list})
 })
@@ -140,6 +144,15 @@ app.post('/cpf/add/:cpf', (request, responseExpress) => {
 	const hasCpf = database.addCpf(request.params.cpf)
 
 	responseExpress.json({isOk: true, hasCpf: true})
+})
+
+app.get('/transactions/get/:id', (request, responseExpress) => {
+	const id = request.params.id
+
+	const transactions = database.transactionGet(id)
+	const total = transactions.reduce((total, transaction) => total + Number(transaction.amount), 0)
+
+	responseExpress.json({isOk: true, list: transactions, total})
 })
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))

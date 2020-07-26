@@ -35,10 +35,27 @@ const peddingBico = (userId) => {
 	return bicos.request.filter(bico => bico.userId === userId)
 }
 
+const transactionAdd = (userId, amount, date, name) => {
+	const transaction = {
+		id: uuidv4(),
+		userId, amount, date, name
+	}
+
+	bicos.transaction.push(transaction)
+	save()
+	return transaction
+}
+
+const transactionGet = (userId) => {
+	return bicos.transactions.filter(transaction => transaction.userId === userId)
+}
+
 module.exports = {
 	bicos,
 	addBico,
 	hasBankWithCpf,
 	addCpf,
-	peddingBico
+	peddingBico,
+	transactionAdd,
+	transactionGet
 }
