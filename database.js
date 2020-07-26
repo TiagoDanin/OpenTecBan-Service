@@ -53,8 +53,16 @@ const transactionGet = (userId) => {
 	return bicos.transactions.filter(transaction => transaction.userId === userId)
 }
 
+const donePico = (id) => {
+	const bicoSelect = bicos.request.find(bico => bico.id === id)
+	bicos.request = bicos.request.filter(bico => bico.id !== id)
+	bicos.done.push(bicoSelect)
+	save()
+}
+
 module.exports = {
 	bicos,
+	donePico,
 	addBico,
 	hasBankWithCpf,
 	addCpf,

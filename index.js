@@ -108,6 +108,8 @@ app.post('/confirmPayment/:id', (request, responseExpress) => {
 })
 
 app.get('/done/bico/:id', (request, responseExpress) => {
+	database.donePico(request.params.id)
+
 	responseExpress.json({isOk: true})
 })
 
