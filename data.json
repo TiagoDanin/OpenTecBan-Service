@@ -2,6 +2,7 @@
 	"list": [
 		{
 			"id": "7e7ff095-5a47-40ff-8419-10a5fd379d07",
+			"type": "Programador",
 			"name": "Tiago Danin",
 			"photo": "https://avatars1.githubusercontent.com/u/5731176?s=460",
 			"description": "Faço programas para computador"

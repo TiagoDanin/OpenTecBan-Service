@@ -11,10 +11,10 @@ const save = () => {
 	})
 }
 
-const addBico = (name, photo, description) => {
+const addBico = (name, photo, description, type) => {
 	const user = {
 		id: uuidv4(),
-		name, photo, description
+		name, photo, description, type
 	}
 
 	bicos.list.push(user)

@@ -119,7 +119,7 @@ app.get('/bicos/:id', (request, responseExpress) => {
 })
 
 app.post('/bicos/add', (request, responseExpress) => {
-	const user = database.addBico(request.body.name, request.body.photo, request.body.description)
+	const user = database.addBico(request.body.name, request.body.type, request.body.photo, request.body.description)
 
 	responseExpress.json({isOk: true, user, list: database.bicos.list})
 })
