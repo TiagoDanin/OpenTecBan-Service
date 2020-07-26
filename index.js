@@ -136,4 +136,12 @@ app.post('/cpf/add/:cpf', (request, responseExpress) => {
 	responseExpress.json({isOk: true, hasCpf: true})
 })
 
+app.post('/set/extrato/:userID', (request, responseExpress) => {
+	const hasCpf = database.hasBankWithCpf(request.params.cpf)
+
+	const valor = request.body.valor
+
+	responseExpress.json({isOk: true, hasCpf, valor})
+})
+
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
