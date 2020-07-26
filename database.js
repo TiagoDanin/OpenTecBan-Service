@@ -31,9 +31,14 @@ const addCpf = (cpf) => {
 	save()
 }
 
+const peddingBico = (userId) => {
+	return bicos.request.filter(bico => bico.userId === userId)
+}
+
 module.exports = {
 	bicos,
 	addBico,
 	hasBankWithCpf,
-	addCpf
+	addCpf,
+	peddingBico
 }

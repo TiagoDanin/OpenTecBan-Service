@@ -124,6 +124,12 @@ app.post('/bicos/add', (request, responseExpress) => {
 	responseExpress.json({isOk: true, user, list: database.bicos.list})
 })
 
+app.get('/pedding/bico/:id', (request, responseExpress) => {
+	const id = request.params.id
+
+	responseExpress.json({isOk: true, list: database.peddingBico(id)})
+})
+
 app.post('/cpf/check/:cpf', (request, responseExpress) => {
 	const hasCpf = database.hasBankWithCpf(request.params.cpf)
 
